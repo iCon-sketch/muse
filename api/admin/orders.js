@@ -1,0 +1,4 @@
+import { db } from 'hatchable';
+export const access = 'admin';
+export const methods = ['GET','PATCH'];
+export default async function(req,res){if(req.method==='GET'){const {rows}=await db.query('SELECT * FROM orders ORDER BY created_at DESC');return res.json(rows);}const b=req.body||{};const allowed=['pending','processing','shipped','delivered','cancelled'];if(!b.id||!allowed.includes(b.status))return res.status(400).json({error:'Order id and valid status required.'});const {rows}=await db.query('UPDATE orders SET status=$2,updated_at=now() WHERE id=$1 RETURNING *',[b.id,b.status]);return res.json(rows[0]||null);}

@@ -1,0 +1,4 @@
+CREATE TABLE products (id BIGSERIAL PRIMARY KEY, name TEXT NOT NULL, category TEXT NOT NULL, price INTEGER NOT NULL CHECK(price > 0), image_url TEXT NOT NULL, tag TEXT NOT NULL DEFAULT 'NEW', active BOOLEAN NOT NULL DEFAULT true, created_at TIMESTAMP NOT NULL DEFAULT now(), updated_at TIMESTAMP NOT NULL DEFAULT now());
+CREATE TABLE orders (id BIGSERIAL PRIMARY KEY, user_id TEXT NOT NULL, customer_email TEXT NOT NULL, items JSONB NOT NULL, total INTEGER NOT NULL, status TEXT NOT NULL DEFAULT 'pending', payment_status TEXT NOT NULL DEFAULT 'unpaid', shipping_address TEXT NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT now(), updated_at TIMESTAMP NOT NULL DEFAULT now());
+CREATE INDEX idx_orders_user ON orders(user_id);
+CREATE INDEX idx_orders_status ON orders(status);

@@ -1,0 +1,4 @@
+name = "ModeMuse Fashion Store"
+[auth]
+enabled = true
+providers = ["email"]
